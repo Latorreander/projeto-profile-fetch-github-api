@@ -1,8 +1,18 @@
 document.getElementById("btn-search").addEventListener("click", () => {
   const userName = document.getElementById("input-search").value;
-
   getUserPrifile(userName);
 });
+
+document.getElementById("input-search").addEventListener("keyup", (e) => {
+  const userName = e.target.value
+  const key = e.which || e.keyCode
+  const isEnterKeyPressed = key === 13
+
+  if(isEnterKeyPressed){
+    getUserPrifile(userName)
+  }
+});
+
 
 async function user(userName) {
   const response = await fetch(`https://api.github.com/users/${userName}`);
