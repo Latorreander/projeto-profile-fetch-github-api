@@ -5,4 +5,4 @@ async function user(userName) {
     return await response.json();
   }
 
-  export {user}
+  export { user }
