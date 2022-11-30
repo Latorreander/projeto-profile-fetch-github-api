@@ -9,15 +9,22 @@ const screen = {
         <p>Seguidores:${user.followers}</p> 
         <p>Seguindo:${user.following}</p>
      </div>
-     </div>
-     <div class="events"><h2>Eventos</h2>
-     <ul>
-     <li></li>
-     </ul>`;
+     </div>`;
 
-     let repositoriesItens = ''
-     user.repositories.forEach(repo => repositoriesItens += `<li><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`);
-    
+     let eventsInfo = ''
+     user.events.forEach(event => eventsInfo +=
+        `<li>${event.repo.name}<p>-      ${event.payload.commits[0].message}</p><li/>`);
+        
+        if(user.events.type === "PushEvent" || "CreateEvent"){
+            this.userProfile.innerHTML += `<div class="events">
+            <h2>Eventos</h2>
+            <ul class="events-list">${eventsInfo}</ul>
+            </div>`
+        }
+
+        let repositoriesItens = ''
+        user.repositories.forEach(repo => repositoriesItens += `<li><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`);
+
         if(user.repositories.length > 0){
         this.userProfile.innerHTML += `<div class="repositories">
                                         <h2>Repositórios</h2>
@@ -25,6 +32,7 @@ const screen = {
                                         </div>`
         }
     },
+
     renderNotFound(){
         this.userProfile.innerHTML = "<h3>USUÁRIO NÃO ENCONTRADO</h3>"
     }
